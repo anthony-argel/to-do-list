@@ -7,19 +7,24 @@ let currentSession = session();
 let projects = [];
 let currentProjectInd = 0;
 let currentTodoInd = 0;
+let todaysDate = "";
+
 
 let startup = () => {
     if(projects.length == 0 && currentSession.hasData()) {
-        console.log("loading data");
         projects = currentSession.loadProjects();
     }
     else {
-        console.log("loading default setup");
         let defaultProj = new Project("default", "This is a test project", 0);
         projects.push(defaultProj);
     }
 }
 
+let getTodaysDate = () => {
+    let d = new Date();
+    todaysDate = d.getFullYear() + "-" + (d.getMonth()+1) +"-" + d.getDate();
+    console.log(todaysDate);
+}
 
 let cancel = () => {
     let addBox = document.getElementById("add-content-bg");
@@ -80,8 +85,7 @@ let addProject = () => {
     else {
         let p1 = new Project(name, description, projects.length);
         projects.push(p1);
-        drawProjectList();
-        currentSession.saveProjects(projects);
+        updateTodoSystem();
         cancel();
     }
 }
@@ -95,9 +99,7 @@ let saveProjectEdit = () => {
     else {
         projects[currentProjectInd].setName(name);
         projects[currentProjectInd].setDescription(description);
-        drawProjectList();
-        drawCurrentProject();
-        currentSession.saveProjects(projects);
+        updateTodoSystem();
         cancel();
     }
 }
@@ -150,9 +152,7 @@ let addTodo = () => {
     if(errorCount == 0) {
         let t1 = new ToDo(name, description, priority, date, projects[currentProjectInd].getLength());
         projects[currentProjectInd].addTodo(t1);
-        drawProjectList();
-        drawCurrentProject();
-        currentSession.saveProjects(projects);      
+        updateTodoSystem();     
         cancel();
     }
     else {
@@ -168,11 +168,43 @@ let drawProjectList = () => {
         d.createProject(projects[i].getName(), projects[i].getID());
     }
 
-    // shouldn't be both drawing and creating on click events
+    addProjectListListeners();
+}
+
+let addProjectListListeners = () => {
     let newProjects = Array.from(document.querySelectorAll("[data-projectid]"));
     for(let i = 0; i < newProjects.length; i++) {
         newProjects[i].addEventListener('click', loadCurrentProject);
     }
+    let eraseIcons = Array.from(document.getElementsByClassName('project-erase'));
+    for(let j = 0; j < eraseIcons.length; j++) {
+        eraseIcons[j].addEventListener('click', eraseProject);
+    }
+    document.querySelector(`[data-projectid='${currentProjectInd}']`).classList.add("selected-proj");
+}
+
+let eraseProject = (e) => {
+    let allProjects = Array.from(document.querySelectorAll("[data-projectid]"));
+    let foundTarget = -1;
+    for(let i = 0; i < allProjects.length; i++) {
+        if(allProjects[i].contains(e.target) && foundTarget == -1) {
+            foundTarget = true;
+            foundTarget = i;
+        }
+        if(foundTarget != -1 && foundTarget != allProjects.length - 1){
+            projects[i].setID(projects[i].getID() - 1);
+            allProjects[i].dataset.projectid = projects[i].getID();
+        }
+
+    }
+    if(foundTarget == currentProjectInd) {
+        currentProjectInd = 0;
+    }
+    projects.splice(foundTarget, 1);
+    allProjects.splice(foundTarget,1);
+    document.querySelector(`[data-projectid='${foundTarget}']`).remove();
+    updateTodoSystem();
+    e.stopPropagation(); // prevent event listener bubbling to parents
 }
 
 let emptyChildNodesById = (parentId) => {
@@ -191,7 +223,9 @@ let drawCurrentProject = () => {
 }
 
 let loadCurrentProject = (e) => {
+    document.querySelector(`[data-projectid='${currentProjectInd}']`).classList.remove("selected-proj");
     currentProjectInd = e.target.getAttribute("data-projectid");
+    document.querySelector(`[data-projectid='${currentProjectInd}']`).classList.add("selected-proj");
     drawCurrentProject();
 }
 
@@ -200,6 +234,27 @@ let addTodoListeners = () => {
     for(let i = 0; i < allTodos.length; i++) {
         allTodos[i].addEventListener('click', openEditTodo);
     }
+    let allEraseIcons = Array.from(document.getElementsByClassName("todo-erase"));
+    for(let j= 0; j < allEraseIcons.length; j++) {
+        allEraseIcons[j].addEventListener('click', deleteItem);
+    }
+    let checkIcons = Array.from(document.getElementsByClassName('checkbox'));
+    for (let k = 0; k < checkIcons.length; k++) {
+        checkIcons[k].addEventListener('click', toggleCheckbox);
+    }
+}
+
+let toggleCheckbox = (e) => {
+    e.target.classList.toggle("checked");
+    let allTodos = Array.from(document.querySelectorAll("[data-todoid]"));
+    for(let i = 0; i < allTodos.length; i++) {
+        if(allTodos[i].contains(e.target)) {
+            allTodos[i].classList.toggle("completed-todo");
+            projects[currentProjectInd].todos[i].setCompleted(!projects[currentProjectInd].todos[i].getCompleted());
+            updateTodoSystem();
+        }
+    }
+    e.stopPropagation(); // prevent event listener bubbling to parents
 }
 
 let showAlert = (text) => {
@@ -212,11 +267,25 @@ let exitAlert = () => {
     document.getElementById("alert").classList.add("hidden");
 }
 
+let deleteItem = (e) => {
+    let allTodos = Array.from(document.querySelectorAll("[data-todoid]"));
+    for(let i = 0; i < allTodos.length; i++) {
+        if(allTodos[i].contains(e.target)) {
+            projects[currentProjectInd].removeTodo(allTodos[i].dataset.todoid);
+            updateTodoSystem();
+        }
+    }
+    e.stopPropagation(); // prevent event listener bubbling to parents
+}
+
+let updateTodoSystem = () => {
+    drawProjectList();
+    drawCurrentProject();
+    currentSession.saveProjects(projects);
+}
 
 
-
-
-
+getTodaysDate();
 startup();
 drawProjectList();
 drawCurrentProject();
@@ -230,3 +299,4 @@ document.getElementsByClassName("edit-btn")[0].addEventListener('click', savePro
 document.getElementsByClassName("la-plus-square")[0].addEventListener('click', openAddToDo);
 document.getElementById("alert").querySelector("button").addEventListener('click', exitAlert);
 document.getElementById("project-name").addEventListener('click', openEditProject);
+//document.getElementById("today-btn").addEventListener('click', showToday);

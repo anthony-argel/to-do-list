@@ -1,5 +1,5 @@
 let domMaker = (() => {
-    let createToDo = (todoName, id) => {
+    let createToDo = (todoName, id, completed) => {
         let todolist = document.getElementById("current-todos");
         let todo = document.createElement("div");
         todo.classList.add("todo")
@@ -13,6 +13,10 @@ let domMaker = (() => {
     
         let name = document.createElement("p");
         name.textContent = todoName;
+        if(completed) {
+            todo.classList.add("completed-todo");
+            checkbox.classList.add("checked");
+        }
     
         left.appendChild(checkbox);
         left.appendChild(name);
@@ -23,7 +27,7 @@ let domMaker = (() => {
         let trash = document.createElement("i");
         trash.classList.add("las");
         trash.classList.add("la-times");
-    
+        trash.classList.add("todo-erase");
         right.appendChild(trash);
     
         todo.appendChild(left);
@@ -33,14 +37,22 @@ let domMaker = (() => {
 
     let createToDos = (list) => {
         for(let i = 0; i < list.length; i++) {
-            createToDo(list[i].getTitle(), list[i].getId());
+            createToDo(list[i].getTitle(), list[i].getId(), list[i].getCompleted());
         }
     }
     
     function createProject(name, id) {
         let projects = document.getElementById("loadedprojects");
         let newProject = document.createElement("p");
+
+        let deleteIcon = document.createElement("i");
+        deleteIcon.classList.add("las");
+        deleteIcon.classList.add("la-times");
+        deleteIcon.classList.add("hover-hide");
+        deleteIcon.classList.add("project-erase");
         newProject.textContent = name;
+        if (id !== 0) 
+          newProject.appendChild(deleteIcon);
         newProject.dataset.projectid = id;
         projects.appendChild(newProject);
     }

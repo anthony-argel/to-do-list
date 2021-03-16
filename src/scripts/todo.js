@@ -1,12 +1,13 @@
 export class ToDo {
 
     // not sure how sonstructors work in this
-    constructor(newTitle, newDescription, newPriority, newDueDate, newId) {
+    constructor(newTitle, newDescription, newPriority, newDueDate, newId, completed) {
         this.title = newTitle;
         this.description = newDescription;
         this.priority = newPriority;
         this.dueDate = newDueDate;
         this.id = newId;
+        this.isCompleted = completed;
     }
 
     setTitle(newTitle) {
@@ -39,5 +40,13 @@ export class ToDo {
 
     getDate() {
         return this.dueDate;
+    }
+
+    setCompleted(val) {
+        this.isCompleted = val;
+    }
+
+    getCompleted() {
+        return this.isCompleted;
     }
 }

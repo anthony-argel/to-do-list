@@ -30,6 +30,10 @@ export class Project {
     getName() {
         return this.name;
     }
+    
+    setID(num) {
+        this.id = num;
+    }
 
     getID() {
         return this.id;
@@ -47,5 +51,25 @@ export class Project {
         return this.todos;
     }
 
+    removeTodo(ind) {
+        this.todos.splice(ind, 1);
+        this.shiftTodoIdsLeft(ind);
+    }
 
+    shiftTodoIdsLeft(startInd) {
+        for(let i = startInd; i < this.todos.length; i++) {
+            this.todos[i].setId(this.todos[i].getId() - 1);
+        }
+    }
+
+    getTodosOfDate(date) {
+        let dates = [];
+        for(let i = 0; i < this.todos.length; i++) {
+            console.log(this.todos[i].getDate());
+            if(this.todos[i].getDate() == date) {
+                dates.push(this.todos[i]);
+            }
+        }
+        return dates;
+    }
 }

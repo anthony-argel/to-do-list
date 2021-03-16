@@ -34,7 +34,6 @@ let session = (() => {
         if(!hasSession)
             return;
         localStorage.setItem("userdata", JSON.stringify(theProjects));
-        console.log("saved: " + JSON.stringify(theProjects));
     }
 
     function hasData() {
@@ -47,7 +46,6 @@ let session = (() => {
         if(!hasSession)
             return;
         let projects = JSON.parse(localStorage.getItem("userdata"));
-        console.log(localStorage.getItem('userdata'));
         let loadedProjects =[];
         let tempTodo;
         let tempProject;
@@ -55,12 +53,11 @@ let session = (() => {
             tempProject = new Project(projects[i].name, projects[i].description, projects[i].id);
             for(let j = 0; j < projects[i].todos.length; j++) {
                 tempTodo = new ToDo(projects[i].todos[j].title, projects[i].todos[j].description, 
-                    projects[i].todos[j].priority, projects[i].todos[j].dueDate, projects[i].todos[j].id);
+                    projects[i].todos[j].priority, projects[i].todos[j].dueDate, projects[i].todos[j].id, projects[i].todos[j].isCompleted);
                 tempProject.addTodo(tempTodo);
             }
             loadedProjects.push(tempProject);
         }
-        console.log("loaded: " + loadedProjects);
         return loadedProjects;
     }
 
