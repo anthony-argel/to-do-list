@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <title></title>
+  </head>
+  <body>
+      <nav>
+          <header>To-do</header>
+      </nav>
+      <main>
+        <section id="tools">
+            <div id="base-tools">
+                <p>Today</p>
+                <p>Week</p>
+                <p>Important</p>
+                <p>Urgent</p>
+            </div>
+            <div id="projects">
+                <div id="project-title">
+                    <p>Projects</p>
+                    <i style="color:white" class="las la-plus"></i>
+                </div>
+                <hr>
+                <div id="loadedprojects">
+
+                </div>
+            </div>
+            
+        </section>
+        <section id="currentProject">
+            <p id="project-name">Web dev</p>
+            <hr>
+           
+            <div id="current-todos">
+            </div>
+            <i class="las la-plus-square la-3x"></i>
+        </section>
+      </main>
+      <div id="add-content-bg" class="hidden">
+        <div id="add-project" class="hidden">
+            <p>Create a Project</p>
+            <label for="proj-name">
+                Name: <br/><input type="text" id="proj-name">
+              </label>
+              <label for="proj-description" style="height: 100vh;">
+                  Description: <br><textarea type="textbox" id="proj-description"></textarea>
+                </label>
+                <div class="add-buttons">
+                    <button class="add-btn">Add</button>
+                    <button class="cancel-btn" >Cancel</button>
+                </div>
+        </div>
+        <div id="add-todo" class="hidden">
+            <p>Create a Todo Item</p>
+            <label for="todo-name">
+                Name: <br/><input type="text" id="todo-name">
+            </label>
+            <label for="todo-description" >
+                Description: <br><textarea style="height: 18vh; resize:none;" type="textbox" id="todo-description"></textarea>
+            </label>
+            <label for="todo-prio">
+                Priority<br/><input type="number" min="0" max="10" value="1" id="todo-prio">
+            </label>
+            <label for="todo-date">
+                Due Date<br/><input type="date" id="todo-date">
+            </label>
+            <div class="add-buttons">
+                <button class="add-btn">Add</button>
+                <button class="cancel-btn" >Cancel</button>
+            </div>
+        </div>
+      </div>
+      <div id="alert" class="hidden">
+          <p></p>
+          <button>Ok</button>
+      </div>
+      <footer>
+          <a href="https://github.com/anthony-argel">My Github</a>
+      </footer>
+    <script src="main.js"></script>
+  </body>
+</html>
