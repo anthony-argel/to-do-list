@@ -14,10 +14,8 @@
       <main>
         <section id="tools">
             <div id="base-tools">
-                <p>Today</p>
-                <p>Week</p>
-                <p>Important</p>
-                <p>Urgent</p>
+                <p><i class="las la-calendar-day"></i>Today</p>
+                <p><i class="las la-calendar-week"></i>This Week</p>
             </div>
             <div id="projects">
                 <div id="project-title">
@@ -32,7 +30,7 @@
             
         </section>
         <section id="currentProject">
-            <p id="project-name">Web dev</p>
+            <p id="project-name"></p>
             <hr>
            
             <div id="current-todos">
@@ -42,15 +40,16 @@
       </main>
       <div id="add-content-bg" class="hidden">
         <div id="add-project" class="hidden">
-            <p>Create a Project</p>
+            <p></p>
             <label for="proj-name">
                 Name: <br/><input type="text" id="proj-name">
               </label>
-              <label for="proj-description" style="height: 100vh;">
+              <label for="proj-description" style="height: 30vh;">
                   Description: <br><textarea type="textbox" id="proj-description"></textarea>
                 </label>
                 <div class="add-buttons">
                     <button class="add-btn">Add</button>
+                    <button class="edit-btn">Save</button>
                     <button class="cancel-btn" >Cancel</button>
                 </div>
         </div>
@@ -70,6 +69,7 @@
             </label>
             <div class="add-buttons">
                 <button class="add-btn">Add</button>
+                <button class="edit-btn">Save</button>
                 <button class="cancel-btn" >Cancel</button>
             </div>
         </div>
