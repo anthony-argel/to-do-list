@@ -7,16 +7,24 @@ export class Project {
         this.description = newDesc;
     }
 
+    setName(title) {
+        this.name = title;
+    }
+
+    setDescription(desc) {
+        this.description = desc;
+    }
+
     addTodo(todo) {
         this.todos.push(todo);
     }
 
-    getLength() {
-        return this.todos.length;
+    getToDo(ind) {
+        return this.todos[ind];
     }
 
-    getTodo(ind) {
-        return this.todos[ind];
+    getLength() {
+        return this.todos.length;
     }
 
     getName() {
@@ -25,6 +33,14 @@ export class Project {
 
     getID() {
         return this.id;
+    }
+
+    getDescription() {
+        return this.description;
+    }
+
+    setTodos(list) {
+        this.todos = list;
     }
 
     getTodos() {

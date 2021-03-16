@@ -1,8 +1,9 @@
 let domMaker = (() => {
-    let createToDo = (todoName) => {
+    let createToDo = (todoName, id) => {
         let todolist = document.getElementById("current-todos");
         let todo = document.createElement("div");
         todo.classList.add("todo")
+        todo.dataset.todoid = id;
     
         let left = document.createElement("div");
         left.classList.add("left");
@@ -21,14 +22,9 @@ let domMaker = (() => {
     
         let trash = document.createElement("i");
         trash.classList.add("las");
-        trash.classList.add("la-trash");
-    
-        let edit = document.createElement("i");
-        edit.classList.add("las");
-        edit.classList.add("la-pen");
+        trash.classList.add("la-times");
     
         right.appendChild(trash);
-        right.appendChild(edit);
     
         todo.appendChild(left);
         todo.appendChild(right);
@@ -37,7 +33,7 @@ let domMaker = (() => {
 
     let createToDos = (list) => {
         for(let i = 0; i < list.length; i++) {
-            createToDo(list[i].getTitle());
+            createToDo(list[i].getTitle(), list[i].getId());
         }
     }
     

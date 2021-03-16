@@ -1,34 +1,43 @@
-const todo = (() => {
-    let title = "";
-    let description = "";
-    let priority;
-    let dueDate;
+export class ToDo {
 
     // not sure how sonstructors work in this
-    let psuedoCon = (newTitle, newDescription, newPriority, newDueDate) => {
-        title = newTitle;
-        description = newDescription;
-        priority = newPriority;
-        dueDate = newDueDate;
+    constructor(newTitle, newDescription, newPriority, newDueDate, newId) {
+        this.title = newTitle;
+        this.description = newDescription;
+        this.priority = newPriority;
+        this.dueDate = newDueDate;
+        this.id = newId;
     }
 
-    function setTitle(newTitle) {
-        title = newTitle;
+    setTitle(newTitle) {
+        this.title = newTitle;
     }
 
-    function getTitle() {
-        return title;
+    getTitle() {
+        return this.title;
     }
 
-    function setDescription(newDesc) {
-        description = newDesc;
+    setDescription(newDesc) {
+        this.description = newDesc;
     }
 
-    function getDescription() {
-        return description;
+    getDescription() {
+        return this.description;
     }
 
-    return {setTitle, getTitle, setDescription, getDescription, psuedoCon}
-});
+    setId(newId) {
+        this.id = newId;
+    }
 
-export {todo};
+    getId() {
+        return this.id;
+    }
+
+    getPriority() {
+        return this.priority;
+    }
+
+    getDate() {
+        return this.dueDate;
+    }
+}
