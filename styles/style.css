@@ -22,6 +22,11 @@ main {
 #base-tools {
     padding-top: 9vh;
     font-size: 1.5vw;
+    width: 80%;
+}
+
+#base-tools p {
+    cursor: pointer;
 }
 
 #currentProject {
@@ -101,6 +106,7 @@ footer a {
     padding-right: 2vw;
     font-size: 3vw;
     color: black;
+    cursor: pointer;
 }
 
 .la-plus-square {
@@ -180,6 +186,10 @@ footer a {
     font-size: 1.3vw;
 }
 
+.todo {
+    cursor: pointer;
+}
+
 #alert {
     display: flex;
     justify-content: center;
@@ -241,4 +251,9 @@ textarea, input {
 
 #add-todo .add-buttons {
     margin-top: 2vw;
+}
+
+.la-times:hover {
+    color: red;
+    transform:scale(1.1, 1.1);
 }
